@@ -1,5 +1,7 @@
 {!! '<'.'?'.'xml version="1.0" encoding="UTF-8" ?>' !!}
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:webfeeds="http://webfeeds.org/rss/1.0" xmlns:media="http://search.yahoo.com/mrss/"<?php foreach($namespaces as $n) echo " ".$n; ?>>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:webfeeds="http://webfeeds.org/rss/1.0" xmlns:media="http://search.yahoo.com/mrss/"<?php foreach ($namespaces as $n) {
+    echo " ".$n;
+} ?>>
     <channel>
         <title>{!! $channel['title'] !!}</title>
         <link>{{ $channel['rssLink'] }}</link>
@@ -54,34 +56,40 @@
             @endforeach
             />
             @endif
-            @if (!empty($item['media:content']))
-            <media:content
-            @foreach ($item['media:content'] as $k => $v)
-            {!! $k.'="'.$v.'" ' !!}
-            @endforeach
-            />
-            @endif
-            @if (!empty($item['media:thumbnail']))
-            <media:thumbnail
-            @foreach ($item['media:thumbnail'] as $k => $v)
-            {!! $k.'="'.$v.'" ' !!}
-            @endforeach
-            />
-            @endif
-            @if (!empty($item['media:title']))
-            <media:title type="plain">{{ $item['media:title'] }}</media:title>
-            @endif
-            @if (!empty($item['media:description']))
-            <media:description type="plain">{{ $item['media:description'] }}</media:description>
-            @endif
-            @if (!empty($item['media:keywords']))
-            <media:keywords>{{ $item['media:title'] }}</media:keywords>
-            @endif
-            @if (!empty($item['media:rating']))
-            <media:rating>{{ $item['media:rating'] }}</media:rating>
-            @endif
-            @if (!empty($item['creativeCommons:license']))
-            <creativeCommons:license>{{ $item['creativeCommons:license'] }}</creativeCommons:license>
+			@if (!empty($item['media']))
+				@foreach($item['media'] as $key => $value)
+		            @if ($key=='content' && !empty($value))
+		            <media:content
+		            @foreach ($value as $k => $v)
+		            {!! $k.'="'.$v.'" ' !!}
+		            @endforeach
+		            />
+		            @endif
+		           @if ($key=='thumbnail' && !empty($value))
+		            <media:thumbnail
+		            @foreach ($value as $k => $v)
+		            {!! $k.'="'.$v.'" ' !!}
+		            @endforeach
+		            />
+		            @endif
+		           @if ($key=='title' && !empty($value))
+		            <media:title type="plain">{{ $value }}</media:title>
+		            @endif
+		            @if ($key=='description' && !empty($value))
+		            <media:description type="plain">{{ $value }}</media:description>
+		            @endif
+		            @if ($key=='keywords' && !empty($value))
+		            <media:keywords>{{ $value }}</media:keywords>
+		            @endif
+		             @if ($key=='rating' && !empty($value))
+		            <media:rating>{{ $value }}</media:rating>
+		            @endif
+				@endforeach
+			@endif
+            @if (!empty($item['creativeCommons']))
+				@if ($key=='license' && !empty($value))
+            	<creativeCommons:license>{{ $value }}</creativeCommons:license>
+				@endif
             @endif
         </item>
         @endforeach

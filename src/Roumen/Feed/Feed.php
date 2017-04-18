@@ -140,69 +140,6 @@ class Feed
     private $customView = null;
 
     /**
-     * Add new item to $items array
-     *
-     * @param string $title
-     * @param string $author
-     * @param string $link
-     * @param string $pubdate
-     * @param string $description
-     * @param string $content
-     * @param array $enclosure (optional)
-     * @param string $category (optional)
-     *
-     * @return void
-     */
-    public function add($title, $author, $link, $pubdate, $description, $content='', $enclosure = [], $category='')
-    {
-        // shortening the description
-        if ($this->shortening)
-        {
-            $description = mb_substr($description, 0, $this->shorteningLimit, 'UTF-8');
-        }
-
-        // add to items
-        $this->setItem([
-            'title' => $title,
-            'author' => $author,
-            'link' => $link,
-            'pubdate' => $pubdate,
-            'description' => $description,
-            'content' => $content,
-            'enclosure' => $enclosure,
-            'category' => $category
-        ]);
-    }
-
-    /**
-     * Add new items to $items array
-     *
-     * @param array $a
-     *
-     * @return void
-     */
-    public function addItem(array $item)
-    {
-        // if is multidimensional
-        if (array_key_exists(1, $item))
-        {
-            foreach ($item as $i)
-            {
-                $this->addItem($i);
-            }
-
-            return;
-        }
-
-        if ($this->shortening)
-        {
-            $item['description'] = mb_substr($item['description'], 0, $this->shorteningLimit, 'UTF-8');
-        }
-
-        $this->setItem($item);
-    }
-
-    /**
      * Returns aggregated feed with all items from $items array
      *
      * @param string $format (options: 'atom', 'rss')
@@ -213,30 +150,42 @@ class Feed
      */
     public function render($format = null, $cache = null, $key = null)
     {
+        if ($format == null && $this->customView == null) {
+            $format = "atom";
+        }
+        if ($this->customView == null) {
+            $this->customView = $format;
+        }
+        if ($cache != null) {
+            $this->caching = $cache;
+        }
+        if ($key != null) {
+            $this->cacheKey = $key;
+        }
 
-        if ($format == null && $this->customView == null) $format = "atom";
-        if ($this->customView == null) $this->customView = $format;
-        if ($cache != null) $this->caching = $cache;
-        if ($key != null) $this->cacheKey = $key;
-
-        if ($this->ctype == null)
-        {
+        if ($this->ctype == null) {
             ($format == 'rss') ? $this->ctype = 'application/rss+xml' : $this->ctype = 'application/atom+xml';
         }
 
         // if cache is on and there is cached feed => return it
-        if ($this->caching > 0 && Cache::has($this->cacheKey))
-        {
+        if ($this->caching > 0 && Cache::has($this->cacheKey)) {
             return Response::make(Cache::get($this->cacheKey), 200, array('Content-Type' => $this->ctype.'; charset='.$this->charset));
         }
 
-        if (empty($this->lang)) $this->lang = Config::get('application.language');
-        if (empty($this->link)) $this->link = Config::get('application.url');
-        if (empty($this->ref)) $this->ref = self::DEFAULT_REF;
-        if (empty($this->pubdate)) $this->pubdate = date('D, d M Y H:i:s O');
+        if (empty($this->lang)) {
+            $this->lang = Config::get('application.language');
+        }
+        if (empty($this->link)) {
+            $this->link = Config::get('application.url');
+        }
+        if (empty($this->ref)) {
+            $this->ref = self::DEFAULT_REF;
+        }
+        if (empty($this->pubdate)) {
+            $this->pubdate = date('D, d M Y H:i:s O');
+        }
 
-        foreach($this->items as $k => $v)
-        {
+        foreach ($this->items as $k => $v) {
             $this->items[$k]['title'] = htmlspecialchars(strip_tags($this->items[$k]['title']), ENT_COMPAT, 'UTF-8');
             $this->items[$k]['pubdate'] = $this->formatDate($this->items[$k]['pubdate'], $format);
         }
@@ -265,28 +214,22 @@ class Feed
         ];
 
         // if cache is on put this feed in cache and return it
-        if ($this->caching > 0)
-        {
+        if ($this->caching > 0) {
             Cache::put($this->cacheKey, View::make($this->getView($this->customView), $viewData)->render(), $this->caching);
 
             return Response::make(Cache::get($this->cacheKey), 200, array('Content-Type' => $this->ctype.'; charset='.$this->charset));
-        }
-        else if ($this->caching == 0)
-        {
+        } elseif ($this->caching == 0) {
             // if cache is 0 delete the key (if exists) and return response
             $this->clearCache();
 
             return Response::make(View::make($this->getView($this->customView), $viewData), 200, array('Content-Type' => $this->ctype.'; charset='.$this->charset));
-        }
-        else if ($this->caching < 0)
-        {
+        } elseif ($this->caching < 0) {
             // if cache is negative value delete the key (if exists) and return cachable object
             $this->clearCache();
 
             return View::make($this->getView($this->customView), $viewData)->render();
         }
-
-     }
+    }
 
      /**
       * Create link
@@ -300,13 +243,20 @@ class Feed
       */
      public static function link($url, $type='atom', $title=null, $lang=null)
      {
+         if ($type == 'rss') {
+             $type = 'application/rss+xml';
+         }
+         if ($type == 'atom') {
+             $type = 'application/atom+xml';
+         }
+         if ($title != null) {
+             $title = ' title="'.$title.'"';
+         }
+         if ($lang != null) {
+             $lang = ' hreflang="'.$lang.'"';
+         }
 
-        if ($type == 'rss') $type = 'application/rss+xml';
-        if ($type == 'atom') $type = 'application/atom+xml';
-        if ($title != null) $title = ' title="'.$title.'"';
-        if ($lang != null) $lang = ' hreflang="'.$lang.'"';
-
-        return '<link rel="alternate"'.$lang.' type="'.$type.'" href="'.$url.'"'.$title.'>';
+         return '<link rel="alternate"'.$lang.' type="'.$type.'" href="'.$url.'"'.$title.'>';
      }
 
     /**
@@ -316,9 +266,7 @@ class Feed
      */
     public function isCached()
     {
-
-        if (Cache::has($this->cacheKey))
-        {
+        if (Cache::has($this->cacheKey)) {
             return true;
         }
 
@@ -332,7 +280,9 @@ class Feed
      */
     public function clearCache()
     {
-        if ($this->isCached()) Cache::forget($this->cacheKey);
+        if ($this->isCached()) {
+            Cache::forget($this->cacheKey);
+        }
     }
 
     /**
@@ -345,7 +295,9 @@ class Feed
         $this->cacheKey = $key;
         $this->caching = $duration;
 
-        if ($duration < 1) $this->clearCache();
+        if ($duration < 1) {
+            $this->clearCache();
+        }
     }
 
     /**
@@ -358,8 +310,7 @@ class Feed
     public function getView($format)
     {
         // if a custom view is set
-        if ($this->customView !== null && View::exists($this->customView))
-        {
+        if ($this->customView !== null && View::exists($this->customView)) {
             return $this->customView;
         }
 
@@ -412,10 +363,8 @@ class Feed
      */
     private function formatDate($date, $format='atom')
     {
-        if ($format == "atom")
-        {
-            switch ($this->dateFormat)
-            {
+        if ($format == "atom") {
+            switch ($this->dateFormat) {
                 case "carbon":
                     $date = date('c', strtotime($date->toDateTimeString()));
                     break;
@@ -426,11 +375,8 @@ class Feed
                     $date = date('c', strtotime($date));
                     break;
             }
-        }
-        else
-        {
-            switch ($this->dateFormat)
-            {
+        } else {
+            switch ($this->dateFormat) {
                 case "carbon":
                     $date = date('D, d M Y H:i:s O', strtotime($date->toDateTimeString()));
                     break;
@@ -499,6 +445,16 @@ class Feed
      */
     public function setItem($item)
     {
+        if (array_key_exists(0, $item)) {
+            foreach ($item as $i) {
+                $this->setItem($i);
+            }
+
+            return;
+        }
+        if ($this->shortening) {
+            $item['description'] = $this->makeShortening($item['description']);
+        }
         $this->items[] = $item;
     }
 
@@ -516,5 +472,17 @@ class Feed
         }
 
         return $rssLink;
+    }
+
+    /**
+     * Makes shortening of description
+     * @param  string $string
+     * @author Marek Tenus <marek@highsolutions.pl>
+     * @since  2017/18/04
+     * @return string
+     */
+    protected function makeShortening($string)
+    {
+        return mb_substr($string, 0, $this->shorteningLimit, 'UTF-8');
     }
 }
