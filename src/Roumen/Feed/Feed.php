@@ -7,6 +7,9 @@
  * @version 2.10.5
  * @link https://roumen.it/projects/laravel-feed
  * @license http://opensource.org/licenses/mit-license.php MIT License
+ * @see https://validator.w3.org/feed/docs/rss2.html
+ * @see http://www.rssboard.org/media-rss
+ * @see http://atomenabled.org/developers/syndication/
  */
 
 use Illuminate\Support\Facades\Config;
