@@ -1,5 +1,5 @@
 {
-    "name": "roumen/feed",
+    "name": "highsolutions/feed",
     "description": "A simple feed generator for Laravel.",
     "homepage": "https://roumen.it/projects/laravel-feed",
     "keywords": ["laravel", "feed", "generator", "rss", "atom"],
