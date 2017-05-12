@@ -1,4 +1,4 @@
-<?php namespace Roumen\Feed;
+<?php namespace HighSolutions\Feed;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -19,10 +19,10 @@ class FeedServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadViewsFrom(__DIR__ . '/../../views', 'feed');
+        $this->loadViewsFrom(__DIR__ . '/views', 'feed');
 
         $this->publishes([
-            __DIR__ . '/../../views' => base_path('resources/views/vendor/feed')
+            __DIR__ . '/views' => base_path('resources/views/vendor/feed')
         ], 'views');
     }
 
@@ -38,7 +38,7 @@ class FeedServiceProvider extends ServiceProvider
             return new Feed();
         });
 
-        $this->app->alias('feed', 'Roumen\Feed\Feed');
+        $this->app->alias('feed', 'HighSolutions\Feed\Feed');
     }
 
     /**

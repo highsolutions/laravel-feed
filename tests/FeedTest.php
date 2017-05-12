@@ -8,18 +8,18 @@ class FeedTest extends Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        $this->feed = new Roumen\Feed\Feed;
+        $this->feed = new HighSolutions\Feed\Feed;
     }
 
     public function testFeedAttributes()
     {
         $this->feed->title = 'TestTitle';
         $this->feed->description = 'TestDescription';
-        $this->feed->domain = 'http://roumen.it/';
-        $this->feed->link = 'http://roumen.it/';
+        $this->feed->domain = 'http://HighSolutions.it/';
+        $this->feed->link = 'http://HighSolutions.it/';
         $this->feed->ref = 'hub';
-        $this->feed->logo = "http://roumen.it/favicon.png";
-        $this->feed->icon = "http://roumen.it/favicon.png";
+        $this->feed->logo = "http://HighSolutions.it/favicon.png";
+        $this->feed->icon = "http://HighSolutions.it/favicon.png";
         $this->feed->pubdate = '2014-02-29 00:00:00';
         $this->feed->lang = 'en';
         $this->feed->copyright = 'All rights reserved by Foobar Corporation';
@@ -30,11 +30,11 @@ class FeedTest extends Orchestra\Testbench\TestCase
 
         $this->assertEquals('TestTitle', $this->feed->title);
         $this->assertEquals('TestDescription', $this->feed->description);
-        $this->assertEquals('http://roumen.it/', $this->feed->domain);
-        $this->assertEquals('http://roumen.it/', $this->feed->link);
+        $this->assertEquals('http://HighSolutions.it/', $this->feed->domain);
+        $this->assertEquals('http://HighSolutions.it/', $this->feed->link);
         $this->assertEquals('hub', $this->feed->ref);
-        $this->assertEquals("http://roumen.it/favicon.png", $this->feed->logo);
-        $this->assertEquals("http://roumen.it/favicon.png", $this->feed->icon);
+        $this->assertEquals("http://HighSolutions.it/favicon.png", $this->feed->logo);
+        $this->assertEquals("http://HighSolutions.it/favicon.png", $this->feed->icon);
         $this->assertEquals('2014-02-29 00:00:00', $this->feed->pubdate);
         $this->assertEquals('en', $this->feed->lang);
         $this->assertEquals('All rights reserved by Foobar Corporation', $this->feed->copyright);
@@ -130,17 +130,17 @@ class FeedTest extends Orchestra\Testbench\TestCase
     public function testFeedLink()
     {
         // default formats
-        $this->assertEquals('<link rel="alternate" type="application/atom+xml" href="http://domain.tld/feed">', Roumen\Feed\Feed::link('http://domain.tld/feed', 'atom'));
-        $this->assertEquals('<link rel="alternate" type="application/rss+xml" href="http://domain.tld/feed">', Roumen\Feed\Feed::link('http://domain.tld/feed', 'rss'));
+        $this->assertEquals('<link rel="alternate" type="application/atom+xml" href="http://domain.tld/feed">', HighSolutions\Feed\Feed::link('http://domain.tld/feed', 'atom'));
+        $this->assertEquals('<link rel="alternate" type="application/rss+xml" href="http://domain.tld/feed">', HighSolutions\Feed\Feed::link('http://domain.tld/feed', 'rss'));
 
         // with custom type
-        $this->assertEquals('<link rel="alternate" type="text/xml" href="http://domain.tld/feed">', Roumen\Feed\Feed::link('http://domain.tld/feed', 'text/xml'));
+        $this->assertEquals('<link rel="alternate" type="text/xml" href="http://domain.tld/feed">', HighSolutions\Feed\Feed::link('http://domain.tld/feed', 'text/xml'));
 
         // with title
-        $this->assertEquals('<link rel="alternate" type="application/rss+xml" href="http://domain.tld/feed" title="Feed: RSS">', Roumen\Feed\Feed::link('http://domain.tld/feed', 'rss', 'Feed: RSS'));
+        $this->assertEquals('<link rel="alternate" type="application/rss+xml" href="http://domain.tld/feed" title="Feed: RSS">', HighSolutions\Feed\Feed::link('http://domain.tld/feed', 'rss', 'Feed: RSS'));
 
         // with title and lang
-        $this->assertEquals('<link rel="alternate" hreflang="en" type="application/atom+xml" href="http://domain.tld/feed" title="Feed: Atom">', Roumen\Feed\Feed::link('http://domain.tld/feed', 'atom', 'Feed: Atom', 'en'));
+        $this->assertEquals('<link rel="alternate" hreflang="en" type="application/atom+xml" href="http://domain.tld/feed" title="Feed: Atom">', HighSolutions\Feed\Feed::link('http://domain.tld/feed', 'atom', 'Feed: Atom', 'en'));
     }
 
     public function testFeedCustomView()
@@ -158,7 +158,7 @@ class FeedTest extends Orchestra\Testbench\TestCase
         $requestUrl = 'http://real.domain.need.to.be.hidden/test.xml';
         $this->call('get', $requestUrl);
 
-        $reflectionMethod = new ReflectionMethod(Roumen\Feed\Feed::class, 'getRssLink');
+        $reflectionMethod = new ReflectionMethod(HighSolutions\Feed\Feed::class, 'getRssLink');
         $reflectionMethod->setAccessible(true);
         $result = $reflectionMethod->invokeArgs($this->feed, []);
 
@@ -172,7 +172,7 @@ class FeedTest extends Orchestra\Testbench\TestCase
 
         $this->feed->domain = 'http://rss.service.com/';
 
-        $reflectionMethod = new ReflectionMethod(Roumen\Feed\Feed::class, 'getRssLink');
+        $reflectionMethod = new ReflectionMethod(HighSolutions\Feed\Feed::class, 'getRssLink');
         $reflectionMethod->setAccessible(true);
         $result = $reflectionMethod->invokeArgs($this->feed, []);
 

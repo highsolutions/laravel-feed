@@ -1,13 +1,4 @@
-<?php namespace Roumen\Feed;
-
-/**
- * Feed generator class for laravel-feed package.
- *
- * @author Roumen Damianoff <roumen@crimsson.com>
- * @version 2.10.5
- * @link https://roumen.it/projects/laravel-feed
- * @license http://opensource.org/licenses/mit-license.php MIT License
- */
+<?php namespace HighSolutions\Feed;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;

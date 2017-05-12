@@ -1,7 +1,6 @@
 {
     "name": "highsolutions/feed",
     "description": "A simple feed generator for Laravel.",
-    "homepage": "https://roumen.it/projects/laravel-feed",
     "keywords": ["laravel", "feed", "generator", "rss", "atom"],
     "license": "MIT",
     "authors": [
@@ -10,6 +9,10 @@
             "email": "roumen@crimsson.com",
             "role": "Developer",
             "homepage": "https://roumen.it"
+        },
+        {
+            "name": "HighSolutions",
+            "email": "adam@highsolutions.pl"
         }
     ],
     "require": {
@@ -21,8 +24,8 @@
         "orchestra/testbench": "^3.0"
     },
     "autoload": {
-        "psr-0": {
-            "Roumen\\Feed": "src/"
+        "psr-4": {
+            "HighSolutions\\Feed\\": "src/"
         }
     }
 }

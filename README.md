@@ -1,46 +1,45 @@
-# [laravel-feed](https://roumen.it/projects/laravel-feed)
+![Laravel-Feed by HighSolutions](https://raw.githubusercontent.com/highsolutions/laravel-feed/master/intro.jpg)
 
-[![Latest Stable Version](https://poser.pugx.org/roumen/feed/version.png)](https://packagist.org/packages/roumen/feed) [![Total Downloads](https://poser.pugx.org/roumen/feed/d/total.png)](https://packagist.org/packages/roumen/feed) [![Build Status](https://travis-ci.org/RoumenDamianoff/laravel-feed.png?branch=master)](https://travis-ci.org/RoumenDamianoff/laravel-feed) [![License](https://poser.pugx.org/roumen/feed/license.png)](https://packagist.org/packages/roumen/feed)
+Laravel-Feed
+==========================
 
-A simple feed generator for Laravel 5.
+A simple feed generator for Laravel 5 with support for RSS 2.
 
-## Notes
+Installation
+------------
 
-Branch dev-master is for development and is UNSTABLE
-
-## Installation
-
-Run the following command and provide the latest stable version (e.g v2.10.5) :
+Run the following command and provide the latest stable version (3.0.0):
 
 ```bash
-composer require roumen/feed
+composer require highsolutions/feed
 ```
 
-or add the following to your `composer.json` file :
+or add the following to your `composer.json` file:
 
 ```json
-"roumen/feed": "~2.10"
+"highsolutions/feed": "3.*"
 ```
 
-Then register this service provider with Laravel :
+Then register this service provider with Laravel:
 
 ```php
-Roumen\Feed\FeedServiceProvider::class,
+HighSolutions\Feed\FeedServiceProvider::class,
 ```
 
-and add class alias :
+and add class alias:
 
 ```php
-'Feed' => Roumen\Feed\Feed::class,
+'Feed' => HighSolutions\Feed\Feed::class,
 ```
 
-Publish package views (OPTIONAL) :
+Publish package views (OPTIONAL):
 
 ```bash
-php artisan vendor:publish --provider="Roumen\Feed\FeedServiceProvider"
+php artisan vendor:publish --provider="HighSolutions\Feed\FeedServiceProvider"
 ```
 
-## Examples
+Examples
+------------
 
 [How to generate basic feed (with optional caching)](https://github.com/RoumenDamianoff/laravel-feed/wiki/basic-feed)
 
@@ -53,3 +52,10 @@ php artisan vendor:publish --provider="Roumen\Feed\FeedServiceProvider"
 [How to use custom content-type for your feed](https://github.com/RoumenDamianoff/laravel-feed/wiki/How-to-use-custom-content-type)
 
 and more in the [Wiki](https://github.com/RoumenDamianoff/laravel-feed/wiki)
+
+Credits
+------------
+
+This package was originally created by [RoumenDamianoff](http://github.com/RoumenDamianoff) and is available here: [laravel-feed](https://github.com/RoumenDamianoff/laravel-feed).
+
+Currently is developed by [HighSolutions](http://highsolutions.pl), software house from Poland in love in Laravel.
