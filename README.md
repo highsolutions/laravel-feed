@@ -8,7 +8,7 @@ A simple feed generator for Laravel 5 with support for RSS 2.
 Installation
 ------------
 
-Run the following command and provide the latest stable version (3.0.0):
+Run the following command and provide the latest stable version (3.0.2):
 
 ```bash
 composer require highsolutions/feed
