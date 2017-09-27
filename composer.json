@@ -36,7 +36,7 @@
                 "HighSolutions\\Feed\\FeedServiceProvider"
             ],
             "aliases": {
-                "Feed": "HighSolutions\\Feed\\Feed",
+                "Feed": "HighSolutions\\Feed\\Feed"
             }
         }
     },
