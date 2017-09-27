@@ -30,7 +30,15 @@
     },
     "extra": {
         "component": "package",
-        "frameworks": ["Laravel 5"]
+        "frameworks": ["Laravel 5.5"],
+        "laravel": {
+            "providers": [
+                "HighSolutions\\Feed\\FeedServiceProvider"
+            ],
+            "aliases": {
+                "Feed": "HighSolutions\\Feed\\Feed",
+            }
+        }
     },
     "minimum-stability": "stable"
 }

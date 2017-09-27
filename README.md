@@ -20,7 +20,8 @@ or add the following to your `composer.json` file:
 "highsolutions/feed": "3.*"
 ```
 
-Then register this service provider with Laravel:
+This package uses Laravel 5.5 Package Auto-Discovery.
+For previous versions of Laravel, you need to update `config/app.php` by adding an entry for the service provider:
 
 ```php
 HighSolutions\Feed\FeedServiceProvider::class,
@@ -58,4 +59,4 @@ Credits
 
 This package was originally created by [RoumenDamianoff](http://github.com/RoumenDamianoff) and is available here: [laravel-feed](https://github.com/RoumenDamianoff/laravel-feed).
 
-Currently is developed by [HighSolutions](http://highsolutions.pl), software house from Poland in love in Laravel.
+Currently is developed by [HighSolutions](https://highsolutions.org), software house from Poland in love in Laravel.
