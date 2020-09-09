@@ -3,7 +3,7 @@
 Laravel-Feed
 ==========================
 
-A simple feed generator for Laravel 5 with support for RSS 2.
+A simple feed generator for Laravel 5/6.x/7.x/8.x with support for RSS 2.
 
 Installation
 ------------
